@@ -1,4 +1,5 @@
 using PromoCodeFactory.WebHost;
+using PromoCodeFactory.DataAccess;
 
 var builder = WebApplication.CreateBuilder();
 
@@ -9,7 +10,7 @@ builder.Services.AddOpenApi(builder.Environment);
 
 var app = builder.Build();
 
-app.UseSwagger();
+app.MapOpenApi();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();

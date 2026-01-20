@@ -1,24 +1,26 @@
 ﻿using PromoCodeFactory.Core.Abstractions.Repositories;
 using PromoCodeFactory.Core.Domain;
+using System.Collections.Concurrent;
 
 namespace PromoCodeFactory.DataAccess.Repositories;
 
 public class InMemoryRepository<T>: IRepository<T> where T: BaseEntity
 {
-    private readonly List<T> _data;
+    private readonly ConcurrentDictionary<Guid, T> _data;
 
     public InMemoryRepository(IEnumerable<T> data)
     {
-        _data = [.. data];
+        _data = new ConcurrentDictionary<Guid, T>(data.Select(e => new KeyValuePair<Guid, T>(e.Id, e)));
     }
 
-    public Task<IEnumerable<T>> GetAllAsync(CancellationToken ct)
+    public Task<IReadOnlyCollection<T>> GetAllAsync(CancellationToken ct)
     {
-        return Task.FromResult(_data.AsEnumerable());
+        return Task.FromResult((IReadOnlyCollection<T>)_data);
     }
 
-    public Task<T> GetByIdAsync(Guid id, CancellationToken ct)
+    public Task<T?> GetByIdAsync(Guid id, CancellationToken ct)
     {
-        return Task.FromResult(_data.FirstOrDefault(x => x.Id == id));
+        _data.TryGetValue(id, out var value);
+        return Task.FromResult(value);
     }
 }

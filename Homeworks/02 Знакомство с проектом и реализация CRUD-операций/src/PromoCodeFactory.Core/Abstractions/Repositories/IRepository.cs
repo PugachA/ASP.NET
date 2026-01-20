@@ -4,7 +4,7 @@ namespace PromoCodeFactory.Core.Abstractions.Repositories;
 
 public interface IRepository<T> where T: BaseEntity
 {
-    Task<IEnumerable<T>> GetAllAsync(CancellationToken ct);
+    Task<IReadOnlyCollection<T>> GetAllAsync(CancellationToken ct);
 
-    Task<T> GetByIdAsync(Guid id, CancellationToken ct);
+    Task<T?> GetByIdAsync(Guid id, CancellationToken ct);
 }

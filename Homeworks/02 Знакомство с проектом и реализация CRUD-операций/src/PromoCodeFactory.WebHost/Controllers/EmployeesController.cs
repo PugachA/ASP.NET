@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PromoCodeFactory.Core.Abstractions.Repositories;
 using PromoCodeFactory.Core.Domain.Administration;
+using PromoCodeFactory.WebHost.Mapping;
 using PromoCodeFactory.WebHost.Models;
 
 namespace PromoCodeFactory.WebHost.Controllers;
@@ -17,17 +18,12 @@ public class EmployeesController(IRepository<Employee> employeeRepository) : Con
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<EmployeeShortResponse>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<EmployeeShortResponse>>> GetEmployeesAsync(CancellationToken ct)
     {
         var employees = await employeeRepository.GetAllAsync(ct);
 
-        var employeesModels = employees.Select(x =>
-            new EmployeeShortResponse()
-            {
-                Id = x.Id,
-                Email = x.Email,
-                FullName = x.FullName,
-            }).ToList();
+        var employeesModels = employees.Select(Mapper.ToEmployeeShortResponse).ToList();
 
         return Ok(employeesModels);
     }
@@ -46,18 +42,7 @@ public class EmployeesController(IRepository<Employee> employeeRepository) : Con
         if (employee == null)
             return NotFound();
 
-        var employeeModel = new EmployeeResponse()
-        {
-            Id = employee.Id,
-            Email = employee.Email,
-            Roles = employee.Roles.Select(x => new RoleItemResponse()
-            {
-                Name = x.Name,
-                Description = x.Description
-            }).ToList(),
-            FullName = employee.FullName,
-            AppliedPromocodesCount = employee.AppliedPromocodesCount
-        };
+        var employeeModel = Mapper.ToEmployeeResponse(employee);
 
         return Ok(employeeModel);
     }

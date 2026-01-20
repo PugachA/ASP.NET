@@ -14,7 +14,7 @@ public static class FakeDataFactory
             LastName = "Сергеев",
             Roles = new List<Role>()
             {
-                Roles.FirstOrDefault(x => x.Name == "Admin")  
+                Roles.First(x => x.Name == "Admin")  
             },
             AppliedPromocodesCount = 5
         },
@@ -26,7 +26,7 @@ public static class FakeDataFactory
             LastName = "Андреев",
             Roles = new List<Role>()
             {
-                Roles.FirstOrDefault(x => x.Name == "PartnerManager")  
+                Roles.First(x => x.Name == "PartnerManager")  
             },
             AppliedPromocodesCount = 10
         },

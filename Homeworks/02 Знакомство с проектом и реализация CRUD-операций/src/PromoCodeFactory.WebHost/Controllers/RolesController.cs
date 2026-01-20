@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PromoCodeFactory.Core.Abstractions.Repositories;
 using PromoCodeFactory.Core.Domain.Administration;
+using PromoCodeFactory.WebHost.Mapping;
 using PromoCodeFactory.WebHost.Models;
 
 namespace PromoCodeFactory.WebHost.Controllers;
@@ -10,32 +11,19 @@ namespace PromoCodeFactory.WebHost.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/v1/[controller]")]
-public class RolesController
+public class RolesController(IRepository<Role> rolesRepository) : ControllerBase
 {
-    private readonly IRepository<Role> _rolesRepository;
-
-    public RolesController(IRepository<Role> rolesRepository)
-    {
-        _rolesRepository = rolesRepository;
-    }
-
     /// <summary>
     /// Получить все доступные роли сотрудников
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<List<RoleItemResponse>> GetRolesAsync(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<RoleItemResponse>>> GetRolesAsync(CancellationToken ct)
     {
-        var roles = await _rolesRepository.GetAllAsync(ct);
+        var roles = await rolesRepository.GetAllAsync(ct);
 
-        var rolesModelList = roles.Select(x =>
-            new RoleItemResponse()
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Description = x.Description
-            }).ToList();
+        var rolesModels = roles.Select(Mapper.ToRoleItemResponse).ToList();
 
-        return rolesModelList;
+        return Ok(rolesModels);
     }
 }
