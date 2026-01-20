@@ -16,9 +16,10 @@ public class RolesController(IRepository<Role> rolesRepository) : BaseController
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<RoleItemResponse>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<RoleItemResponse>>> Get(CancellationToken ct)
     {
-        var roles = await rolesRepository.GetAllAsync(ct);
+        var roles = await rolesRepository.GetAll(ct);
 
         var rolesModels = roles.Select(Mapper.ToRoleItemResponse).ToList();
 

@@ -15,17 +15,20 @@
     - Собрать решение PromocodeFactory.sln
     - Запустить проект ProcodeFactory.WebHost
     - Проверить работу методов API через Swagger UI
-2. Добавить метод Create в EmployeesController
+2. Добавить метод GetById в EmployeesController
     - Расширить интерфейс IRepository<T>
-    - Добавить CreateEmployeeRequest в папку Models
+    - Добавить EmployeeResponse в папку Models
     - Расширить Mapper
-    - Реализовать метод Create в EmployeesController
+    - Реализовать метод Get в EmployeesController
+    - Если Employee по Id не найден, то возвращать NotFound
+3. Добавить метод Create в EmployeesController
+    - Использовать подход аналогичный п.2
     - Если запрос не прошёл валидацию (не заполнены обязательные поля), то возвращать BadRequest
-3. Добавить метод Update в EmployeesController
+4. Добавить метод Update в EmployeesController
     - Использовать подход аналогичный п.2
     - Если Employee по Id не найден, то возвращать NotFound
     - Если запрос не прошёл валидацию (не заполнены обязательные поля), то возвращать BadRequest
-4. Добавить метод Delete в EmployeesController
+5. Добавить метод Delete в EmployeesController
     - Использовать подход аналогичный п.2
     - Если Employee по Id не найден, то возвращать NotFound
 
@@ -37,6 +40,6 @@
 - Пункт 2 - 2 балла
 - Пункт 3 - 2 балла
 - Пункт 4 - 2 балла
-- Методы контроллера возвращают корректные HTTP статусы - 2 балла
+- Пункт 5 - 2 балла
 
 Для зачёта домашнего задания достаточно 8 баллов.

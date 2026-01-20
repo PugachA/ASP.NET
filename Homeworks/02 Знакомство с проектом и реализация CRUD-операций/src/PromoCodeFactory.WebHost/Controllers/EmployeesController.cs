@@ -19,29 +19,10 @@ public class EmployeesController(IRepository<Employee> employeeRepository) : Bas
     [ProducesResponseType(typeof(IEnumerable<EmployeeShortResponse>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<EmployeeShortResponse>>> Get(CancellationToken ct)
     {
-        var employees = await employeeRepository.GetAllAsync(ct);
+        var employees = await employeeRepository.GetAll(ct);
 
         var employeesModels = employees.Select(Mapper.ToEmployeeShortResponse).ToList();
 
         return Ok(employeesModels);
-    }
-
-    /// <summary>
-    /// Получить данные сотрудника по Id
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(EmployeeResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<EmployeeResponse>> GetById(Guid id, CancellationToken ct)
-    {
-        var employee = await employeeRepository.GetByIdAsync(id, ct);
-
-        if (employee == null)
-            return NotFound();
-
-        var employeeModel = Mapper.ToEmployeeResponse(employee);
-
-        return Ok(employeeModel);
     }
 }

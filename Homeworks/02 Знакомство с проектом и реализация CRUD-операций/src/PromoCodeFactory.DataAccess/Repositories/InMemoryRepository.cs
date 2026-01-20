@@ -13,14 +13,8 @@ public class InMemoryRepository<T>: IRepository<T> where T: BaseEntity
         _data = new ConcurrentDictionary<Guid, T>(data.Select(e => new KeyValuePair<Guid, T>(e.Id, e)));
     }
 
-    public Task<IReadOnlyCollection<T>> GetAllAsync(CancellationToken ct)
+    public Task<IReadOnlyCollection<T>> GetAll(CancellationToken ct)
     {
-        return Task.FromResult((IReadOnlyCollection<T>)_data);
-    }
-
-    public Task<T?> GetByIdAsync(Guid id, CancellationToken ct)
-    {
-        _data.TryGetValue(id, out var value);
-        return Task.FromResult(value);
+        return Task.FromResult((IReadOnlyCollection<T>)_data.Values);
     }
 }
