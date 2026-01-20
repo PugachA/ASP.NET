@@ -1,4 +1,4 @@
-﻿using PromoCodeFactory.Core.Domain;
+using PromoCodeFactory.Core.Domain;
 
 namespace PromoCodeFactory.Core.Abstractions.Repositories;
 

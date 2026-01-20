@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using PromoCodeFactory.Core.Abstractions.Repositories;
 using PromoCodeFactory.Core.Domain.Administration;
 using PromoCodeFactory.WebHost.Mapping;
@@ -9,9 +9,7 @@ namespace PromoCodeFactory.WebHost.Controllers;
 /// <summary>
 /// Сотрудники
 /// </summary>
-[ApiController]
-[Route("api/v1/[controller]")]
-public class EmployeesController(IRepository<Employee> employeeRepository) : ControllerBase
+public class EmployeesController(IRepository<Employee> employeeRepository) : BaseController
 {
     /// <summary>
     /// Получить данные всех сотрудников

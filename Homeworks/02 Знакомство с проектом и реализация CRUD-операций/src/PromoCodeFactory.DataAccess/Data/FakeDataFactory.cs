@@ -1,4 +1,4 @@
-﻿using PromoCodeFactory.Core.Domain.Administration;
+using PromoCodeFactory.Core.Domain.Administration;
 
 namespace PromoCodeFactory.DataAccess.Data;
 

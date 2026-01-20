@@ -1,4 +1,4 @@
-﻿namespace PromoCodeFactory.Core.Domain.Administration;
+namespace PromoCodeFactory.Core.Domain.Administration;
 
 public class Employee : BaseEntity
 {

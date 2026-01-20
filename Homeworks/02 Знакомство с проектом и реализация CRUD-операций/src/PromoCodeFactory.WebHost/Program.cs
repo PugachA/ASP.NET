@@ -5,7 +5,9 @@ var builder = WebApplication.CreateBuilder();
 
 builder.Services.AddDataAccess();
 
+builder.Services.AddProblemDetails();
 builder.Services.AddControllers();
+
 builder.Services.AddOpenApi(builder.Environment);
 
 var app = builder.Build();

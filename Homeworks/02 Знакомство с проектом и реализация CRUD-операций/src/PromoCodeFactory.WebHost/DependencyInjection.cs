@@ -1,4 +1,4 @@
-﻿namespace PromoCodeFactory.WebHost;
+namespace PromoCodeFactory.WebHost;
 
 public static class DependencyInjection
 {

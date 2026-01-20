@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using PromoCodeFactory.Core.Abstractions.Repositories;
 using PromoCodeFactory.Core.Domain.Administration;
 using PromoCodeFactory.WebHost.Mapping;
@@ -9,9 +9,7 @@ namespace PromoCodeFactory.WebHost.Controllers;
 /// <summary>
 /// Роли сотрудников
 /// </summary>
-[ApiController]
-[Route("api/v1/[controller]")]
-public class RolesController(IRepository<Role> rolesRepository) : ControllerBase
+public class RolesController(IRepository<Role> rolesRepository) : BaseController
 {
     /// <summary>
     /// Получить все доступные роли сотрудников

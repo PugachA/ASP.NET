@@ -1,4 +1,4 @@
-﻿using PromoCodeFactory.Core.Abstractions.Repositories;
+using PromoCodeFactory.Core.Abstractions.Repositories;
 using PromoCodeFactory.Core.Domain;
 using System.Collections.Concurrent;
 
