@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PromoCodeFactory.Core.Abstractions.Repositories;
 using PromoCodeFactory.Core.Domain.Administration;
 using PromoCodeFactory.WebHost.Models;
@@ -27,9 +24,9 @@ public class RolesController
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<List<RoleItemResponse>> GetRolesAsync()
+    public async Task<List<RoleItemResponse>> GetRolesAsync(CancellationToken ct)
     {
-        var roles = await _rolesRepository.GetAllAsync();
+        var roles = await _rolesRepository.GetAllAsync(ct);
 
         var rolesModelList = roles.Select(x =>
             new RoleItemResponse()

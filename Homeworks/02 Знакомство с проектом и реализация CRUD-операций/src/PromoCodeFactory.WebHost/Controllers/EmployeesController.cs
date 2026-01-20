@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PromoCodeFactory.Core.Abstractions.Repositories;
 using PromoCodeFactory.Core.Domain.Administration;
 using PromoCodeFactory.WebHost.Models;
@@ -14,25 +10,18 @@ namespace PromoCodeFactory.WebHost.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/v1/[controller]")]
-public class EmployeesController : ControllerBase
+public class EmployeesController(IRepository<Employee> employeeRepository) : ControllerBase
 {
-    private readonly IRepository<Employee> _employeeRepository;
-
-    public EmployeesController(IRepository<Employee> employeeRepository)
-    {
-        _employeeRepository = employeeRepository;
-    }
-
     /// <summary>
     /// Получить данные всех сотрудников
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<List<EmployeeShortResponse>> GetEmployeesAsync()
+    public async Task<ActionResult<IEnumerable<EmployeeShortResponse>>> GetEmployeesAsync(CancellationToken ct)
     {
-        var employees = await _employeeRepository.GetAllAsync();
+        var employees = await employeeRepository.GetAllAsync(ct);
 
-        var employeesModelList = employees.Select(x =>
+        var employeesModels = employees.Select(x =>
             new EmployeeShortResponse()
             {
                 Id = x.Id,
@@ -40,7 +29,7 @@ public class EmployeesController : ControllerBase
                 FullName = x.FullName,
             }).ToList();
 
-        return employeesModelList;
+        return Ok(employeesModels);
     }
 
     /// <summary>
@@ -48,9 +37,11 @@ public class EmployeesController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<EmployeeResponse>> GetEmployeeByIdAsync(Guid id)
+    [ProducesResponseType(typeof(EmployeeResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<EmployeeResponse>> GetEmployeeByIdAsync(Guid id, CancellationToken ct)
     {
-        var employee = await _employeeRepository.GetByIdAsync(id);
+        var employee = await employeeRepository.GetByIdAsync(id, ct);
 
         if (employee == null)
             return NotFound();
@@ -68,6 +59,6 @@ public class EmployeesController : ControllerBase
             AppliedPromocodesCount = employee.AppliedPromocodesCount
         };
 
-        return employeeModel;
+        return Ok(employeeModel);
     }
 }

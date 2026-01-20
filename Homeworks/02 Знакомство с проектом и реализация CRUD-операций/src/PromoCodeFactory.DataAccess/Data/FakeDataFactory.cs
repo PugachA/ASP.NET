@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using PromoCodeFactory.Core.Domain.Administration;
+﻿using PromoCodeFactory.Core.Domain.Administration;
 
 namespace PromoCodeFactory.DataAccess.Data;
 
 public static class FakeDataFactory
 {
-    public static IList<Employee> Employees => new List<Employee>()
-    {
+    public static IReadOnlyCollection<Employee> Employees =>
+    [
         new Employee()
         {
             Id = Guid.Parse("451533d5-d8d5-4a11-9c7b-eb9f14e1a32f"),
@@ -33,10 +30,10 @@ public static class FakeDataFactory
             },
             AppliedPromocodesCount = 10
         },
-    };
+    ];
 
-    public static IList<Role> Roles => new List<Role>()
-    {
+    public static IReadOnlyCollection<Role> Roles =>
+    [
         new Role()
         {
             Id = Guid.Parse("53729686-a368-4eeb-8bfa-cc69b6050d02"),
@@ -49,5 +46,5 @@ public static class FakeDataFactory
             Name = "PartnerManager",
             Description = "Партнерский менеджер"
         }
-    };
+    ];
 }

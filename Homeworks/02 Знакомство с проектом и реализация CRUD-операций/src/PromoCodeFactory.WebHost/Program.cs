@@ -1,16 +1,19 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using PromoCodeFactory.WebHost;
 
-namespace PromoCodeFactory.WebHost;
+var builder = WebApplication.CreateBuilder();
 
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        CreateHostBuilder(args).Build().Run();
-    }
+builder.Services.AddDataAccess();
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
-}
+builder.Services.AddControllers();
+builder.Services.AddOpenApi(builder.Environment);
+
+var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseHttpsRedirection();
+
+app.MapControllers();
+
+app.Run();
