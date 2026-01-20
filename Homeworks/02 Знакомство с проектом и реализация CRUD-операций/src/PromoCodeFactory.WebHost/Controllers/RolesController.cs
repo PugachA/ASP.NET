@@ -16,7 +16,7 @@ public class RolesController(IRepository<Role> rolesRepository) : BaseController
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<RoleItemResponse>>> GetRolesAsync(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<RoleItemResponse>>> Get(CancellationToken ct)
     {
         var roles = await rolesRepository.GetAllAsync(ct);
 

@@ -17,7 +17,7 @@ public class EmployeesController(IRepository<Employee> employeeRepository) : Bas
     /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<EmployeeShortResponse>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<EmployeeShortResponse>>> GetEmployeesAsync(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<EmployeeShortResponse>>> Get(CancellationToken ct)
     {
         var employees = await employeeRepository.GetAllAsync(ct);
 
@@ -33,7 +33,7 @@ public class EmployeesController(IRepository<Employee> employeeRepository) : Bas
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(EmployeeResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<EmployeeResponse>> GetEmployeeByIdAsync(Guid id, CancellationToken ct)
+    public async Task<ActionResult<EmployeeResponse>> GetById(Guid id, CancellationToken ct)
     {
         var employee = await employeeRepository.GetByIdAsync(id, ct);
 
